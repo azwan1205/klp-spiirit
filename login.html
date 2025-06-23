@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - SmartSell</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    body {
+      margin: 0;
+      background: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .form-card {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 350px;
+    }
+    .form-card h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    label {
+      font-size: 13px;
+      margin-bottom: 10px;
+      display: block;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .footer-text {
+      text-align: center;
+      font-size: 13px;
+      margin-top: 10px;
+    }
+    .footer-text a {
+      color: #007bff;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <form action="login.php" method="POST" class="form-card">
+    <h2>Masuk ke Akun Anda</h2>
+    <input type="email" name="email" placeholder="Email" required />
+    <input type="password" name="password" placeholder="Kata Sandi" required />
+    <label><input type="checkbox"> Ingat Saya</label>
+    <button type="submit">Masuk</button>
+    <div class="footer-text">
+      Belum punya akun? <a href="register.html">Daftar Sekarang</a>
+    </div>
+  </form>
+</body>
+</html>

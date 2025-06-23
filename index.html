@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SmartSell Electronics</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    body {
+      background: url('assets/images/bg-phone.jpg') no-repeat center center/cover;
+      height: 100vh;
+      color: white;
+      position: relative;
+    }
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 50px;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+    .logo {
+      font-weight: bold;
+      font-size: 22px;
+    }
+    .auth-buttons a {
+      margin-left: 15px;
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-weight: bold;
+      background-color: white;
+      color: black;
+      cursor: pointer;
+    }
+    .auth-buttons a.login-btn {
+      background-color: blue;
+      color: white;
+    }
+    .hero-content {
+      position: absolute;
+      top: 50%;
+      left: 50px;
+      transform: translateY(-50%);
+    }
+    .hero-content h2 {
+      font-size: 36px;
+      font-weight: bold;
+      line-height: 1.4;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+    }
+    .modal-content {
+      background-color: white;
+      color: black;
+      margin: 5% auto;
+      padding: 30px;
+      border-radius: 10px;
+      width: 350px;
+      position: relative;
+      animation: fadeIn 0.3s ease;
+    }
+    .modal-content h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .modal-content input, .modal-content select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    .modal-content button {
+      width: 100%;
+      padding: 10px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .modal-content button:hover {
+      background-color: #218838;
+    }
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 18px;
+      font-weight: bold;
+      color: red;
+      cursor: pointer;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="navbar">
+    <div class="logo">SmartSell Electronics</div>
+    <div class="auth-buttons">
+      <a onclick="openModal('registerModal')">Register</a>
+      <a class="login-btn" onclick="openModal('loginModal')">Login</a>
+    </div>
+  </div>
+
+  <div class="hero-content">
+    <h2>The Smart Way to<br>Buy & Sell<br>Smartphones</h2>
+  </div>
+
+  <!-- Modal Register -->
+  <div id="registerModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('registerModal')">&times;</span>
+      <h2>Daftar</h2>
+      <form id="formRegister" onsubmit="return validasiRegister()" method="POST" action="register.php">
+        <input type="text" name="nama" placeholder="Nama Lengkap" required />
+        <input type="email" name="email" placeholder="Email" required />
+        <input type="password" id="password" name="password" placeholder="Kata Sandi" required />
+        <input type="password" id="confirm_password" name="confirm_password" placeholder="Konfirmasi Sandi" required />
+        <select name="role" required>
+          <option value="">Pilih Role</option>
+          <option value="admin">Admin</option>
+          <option value="user">User</option>
+          <option value="pengguna">Pengguna</option>
+        </select>
+        <button type="submit">Daftar</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Login -->
+  <div id="loginModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('loginModal')">&times;</span>
+      <h2>Login</h2>
+      <form action="login.php" method="POST">
+        <input type="email" name="email" placeholder="Email" required />
+        <input type="password" name="password" placeholder="Kata Sandi" required />
+        <button type="submit">Masuk</button>
+      </form>
+      <p style="text-align:center; margin-top: 10px; font-size: 14px;">
+        Belum punya akun?
+        <a href="#" onclick="switchToRegister()" style="color: blue;">Daftar di sini</a>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    function openModal(id) {
+      document.getElementById(id).style.display = 'block';
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).style.display = 'none';
+    }
+
+    function switchToRegister() {
+      closeModal('loginModal');
+      openModal('registerModal');
+    }
+
+    window.onclick = function(event) {
+      if (event.target.classList.contains('modal')) {
+        event.target.style.display = "none";
+      }
+    }
+
+    function validasiRegister() {
+      const pass = document.getElementById('password').value;
+      const confirm = document.getElementById('confirm_password').value;
+
+      if (pass !== confirm) {
+        alert("Ups! Konfirmasi sandi tidak cocok dengan kata sandi.");
+        return false;
+      }
+      return true;
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    const status = params.get("status");
+    const loginStatus = params.get("login");
+
+    if (status === "sukses") {
+      alert("Akun berhasil didaftarkan!");
+      window.history.replaceState({}, document.title, "index.html");
+    } else if (status === "duplikat") {
+      alert("Email sudah terdaftar. Silakan gunakan email lain.");
+      window.history.replaceState({}, document.title, "index.html");
+    } else if (status === "gagal") {
+      alert("Pendaftaran gagal. Silakan coba lagi.");
+      window.history.replaceState({}, document.title, "index.html");
+    }
+
+    if (loginStatus === "gagal") {
+      alert("Login gagal! Email atau password salah.");
+      window.history.replaceState({}, document.title, "index.html");
+    }
+  </script>
+
+</body>
+</html>
